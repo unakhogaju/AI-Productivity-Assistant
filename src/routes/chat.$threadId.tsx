@@ -67,9 +67,10 @@ function ChatThread() {
     if (error) toast.error(error.message || "Something went wrong");
   }, [error]);
 
-  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const inputRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    inputRef.current?.focus();
+    const ta = inputRef.current?.querySelector("textarea");
+    ta?.focus();
   }, [threadId, status]);
 
   const handleSubmit = (message: PromptInputMessage) => {
@@ -125,9 +126,9 @@ function ChatThread() {
       </Conversation>
 
       <div className="border-t border-border bg-background">
-        <div className="mx-auto w-full max-w-3xl space-y-2 px-4 py-3">
+        <div className="mx-auto w-full max-w-3xl space-y-2 px-4 py-3" ref={inputRef}>
           <PromptInput onSubmit={handleSubmit}>
-            <PromptInputTextarea ref={inputRef} placeholder="Message Aria…" />
+            <PromptInputTextarea placeholder="Message Aria…" />
             <PromptInputFooter className="justify-end">
               <PromptInputSubmit status={status} disabled={isLoading} />
             </PromptInputFooter>
